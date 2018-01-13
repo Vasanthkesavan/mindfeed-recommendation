@@ -2,12 +2,12 @@ const bodyParser = require("body-parser");
 const express = require("express");
 const jwt = require("jsonwebtoken");
 
-const webpack = require('webpack');
-const webpackDevMiddleware = require('webpack-dev-middleware');
-const WebpackDevServer = require('webpack-dev-server');
+//const webpack = require('webpack');
+//const webpackDevMiddleware = require('webpack-dev-middleware');
+//const WebpackDevServer = require('webpack-dev-server');
 
-const config = require('../webpack.config.js');
-const compiler = webpack(config);
+//const config = require('../webpack.config.js');
+//const compiler = webpack(config);
 
 /* Helper Functions */
 const userSignUp = require("./helpers/userSignUp");
@@ -45,24 +45,24 @@ const getMindfeedPlaylist = require('./helpers/getMindfeedPlaylist'); // to be r
 const verifyToken = require('./helpers/verifyToken');
 
 
-if (process.env.DEV_SERVER) {
-  new WebpackDevServer(webpack(config), {
-    publicPath: config.output.publicPath,
-    hot: true,
-    historyApiFallback: true,
-    proxy: {
-      "/api/*": "http://localhost:3000"
-    },
-    open: true
-  }).listen(8000, 'localhost', (err, result) => {
-    if (err) throw Error(err);
-    console.log('WebpackDevServer listening on http://localhost:8000');
-  })
-} else {
-  app.use(webpackDevMiddleware(compiler, {
-    publicPath: config.output.publicPath
-  }));
-}
+// if (process.env.DEV_SERVER) {
+//   new WebpackDevServer(webpack(config), {
+//     publicPath: config.output.publicPath,
+//     hot: true,
+//     historyApiFallback: true,
+//     proxy: {
+//       "/api/*": "http://localhost:3000"
+//     },
+//     open: true
+//   }).listen(8000, 'localhost', (err, result) => {
+//     if (err) throw Error(err);
+//     console.log('WebpackDevServer listening on http://localhost:8000');
+//   })
+// } else {
+//   app.use(webpackDevMiddleware(compiler, {
+//     publicPath: config.output.publicPath
+//   }));
+// }
 
 app.listen(process.env.PORT || 3000);
 console.log('Server listening on:', (process.env.PORT || 3000));
@@ -79,7 +79,7 @@ app.use(session({ secret: 'keyboard cat',
 /* parse incoming requests */
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
-
+app.use(cors());
 app.use(express.static('../client/src/index.html'));
 
 
