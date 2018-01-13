@@ -10,8 +10,8 @@ const jwt = require("jsonwebtoken");
 //const compiler = webpack(config);
 
 /* Helper Functions */
-const userSignUp = require("./helpers/userSignUp");
-const userSignIn = require("./helpers/userSignIn");
+//const userSignUp = require("./helpers/userSignUp");
+//const userSignIn = require("./helpers/userSignIn");
 const addVideo = require("./helpers/addVideo");
 const voteVideo = require("./helpers/voteVideo");
 const bookmarkVideo = require('./helpers/bookmarkVideo');
@@ -85,8 +85,8 @@ app.use(express.static('../client/src/index.html'));
 
 /* List of Routes */
 
-app.post('/api/signup', userSignUp);
-app.post('/api/signin', userSignIn);
+//app.post('/api/signup', userSignUp);
+//app.post('/api/signin', userSignIn);
 app.post('/api/addVideo', addVideo);
 app.post('/api/voteVideo', voteVideo);
 app.post('/api/viewVideo', viewVideo);
