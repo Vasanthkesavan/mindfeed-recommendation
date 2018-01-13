@@ -50,6 +50,9 @@ const UserSchema = new Schema({
         type: [String],
         required: false
     },
+    similarUsers: {
+      type: [String]
+    },
     token: {
         type: String
     }
@@ -75,6 +78,13 @@ const VideoSchema = new Schema({
        required: true,
        unique: true
    },
+   likedBy: {
+     type: [String],
+     required: false
+   },
+  dislikedBy: {
+    type: [String]
+  },
    url: {
        type: String,
        required: false

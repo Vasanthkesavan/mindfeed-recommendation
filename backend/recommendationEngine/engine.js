@@ -1,54 +1,40 @@
-const User = require("../db").User;
-const Video = require("../db").Video;
+const _ = require('underscore');
+const User = require('../db').User;
+const Video = require('../db').Video;
 
 
-module.exports = getMindfeedPlaylist = (req, res) => {
 
-   let email = req.query.email;
-   console.log(email);
-  //let email = 'bella@bella.com';
+//track likes/dislikes of user voteVideo
+
+//find everyone who has rated the items user rated
+module.exports = recommendationEngine = (req, res) => {
+
+  // let email = req.body.params.email;
+  let email = 'bella@bella.com';
   //get users similar users
   User.findOne({email:email}, 'email similarUsers history categoryPreference videoPreference', function(err,user){
     if(err){
       console.log("user does not exist");
       res.status(204).send("User does not exist");
     }
-    if(( user.videoPreference.liked.length + user.videoPreference.disliked.length ) > 10 ){ // user recommendation engine
-      console.log(user);
-      if(user.similarUsers.length === 0){
-
-        getSimilarUsers(user, res, getRecommendedVideos)
-
-      } else {
-
-        getRecommendedVideos(user, res);
-      }
+    console.log(user);
+    if(user.similarUsers.length === 0){
+      getSimilarUsers(user, res, getRecommendedVideos)
 
     } else {
-      console.log("whgaaat3");
-      Video.find().limit(15).exec((err, videos) => {
-        if(err) {
-          throw err;
-        } else {
-          res.status(200).send({videosArr: videos});
-        }
-      });
+      getRecommendedVideos(user, res);
 
     }
-
-
   });
 
 
+}
 
 
 
-};
-
-
-//fn requires user object to be passed with .email and .videoPreference
+    //fn requires user object to be passed with .email and .videoPreference
 function getSimilarUsers(user, res, callback){
-  //get the users who liked/disliked the videos User already has liked/disliked
+    //get the users who liked/disliked the videos User already has liked/disliked
   console.log("User", user);
   console.log("videoId:",_.flatten([user.videoPreference.liked, user.videoPreference.disliked]));
   Video.find({videoId: (_.flatten([user.videoPreference.liked, user.videoPreference.disliked]))}, 'likedBy dislikedBy', function(err, video) {
@@ -136,7 +122,6 @@ function getRecommendedVideos(user, response){
   console.log([user.similarUsers], user.videoPreference.liked);
   User.find({email:_.flatten([user.similarUsers])}, 'videoPreference.liked', function(err, data) {
     //data is an array of objects containing array of liked videos
-
     console.log("similar users",data[0].videoPreference.liked, data[1].videoPreference.liked);
     let likedVideos = [];
     for(var i = 0; i < data.length; i++){

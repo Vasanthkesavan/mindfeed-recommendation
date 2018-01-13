@@ -41,7 +41,7 @@ const getUserDislikes = require('./helpers/getUserDislikes');
 const updateUserPreferences = require('./helpers/updateUserPreferences');
 const getAllBookmarkedVideo = require('./helpers/getAllBookmarkedVideo');
 const updateUserLikesAndDislikes = require('./helpers/updateUserLikesAndDislikes');
-const tempRandomVideos = require('./helpers/tempRandomVideos'); // to be removed after rec engine
+const getMindfeedPlaylist = require('./helpers/getMindfeedPlaylist'); // to be removed after rec engine
 const verifyToken = require('./helpers/verifyToken');
 
 
@@ -111,7 +111,7 @@ app.post('/api/updateUserViewedVideos', updateUserViewedVideos);
 app.get('/api/updateUserPreferences', updateUserPreferences);
 app.get('/api/bookmarkVideo', bookmarkVideo);
 app.get('/api/getAllBookmarkedVideo', getAllBookmarkedVideo);
-app.get('/api/getMindfeedPlaylist', tempRandomVideos);
+app.get('/api/getMindfeedPlaylist', getMindfeedPlaylist);
 app.post('/api/updateUserLikesAndDislikes',updateUserLikesAndDislikes);
 app.get('/api/verifyToken', verifyToken);
 
